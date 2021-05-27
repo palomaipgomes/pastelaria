@@ -30,7 +30,15 @@ class ClientesController extends Controller
     {
         $clientes = new Cliente();
         $clientes->fill($request->all());
-        $clientes->save();
+        if($clientes->save()){
+            return response()->json([
+                'message'   => 'Atualizado com sucesso!',
+            ]);
+        }else{
+            return response()->json([
+                'message'   => 'Erro ao atualizar, tente novamente em alguns minutos!',
+            ]);
+        }
 
         return response()->json($clientes, 201);
     }
@@ -45,8 +53,16 @@ class ClientesController extends Controller
             ], 404);
         }
 
-        $pasteis->fill($request->all());
-        $pasteis->save();
+        $clientes->fill($request->all());
+        if($clientes->save()){
+            return response()->json([
+                'message'   => 'Atualizado com sucesso!',
+            ]);
+        }else{
+            return response()->json([
+                'message'   => 'Erro ao atualizar, tente novamente em alguns minutos!',
+            ]);
+        }
 
         return response()->json($clientes);
     }

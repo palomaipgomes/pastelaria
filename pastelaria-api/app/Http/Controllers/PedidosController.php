@@ -32,7 +32,15 @@ class PedidosController extends Controller
     {
         $pedidos = new Pedido();
         $pedidos->fill($request->all());
-        $pedidos->save();
+        if($pedidos->save()){
+            return response()->json([
+                'message'   => 'Atualizado com sucesso!',
+            ]);
+        }else{
+            return response()->json([
+                'message'   => 'Erro ao atualizar, tente novamente em alguns minutos!',
+            ]);
+        }
         Mail::to($clientes->email)->send(new SendMailUser($clientes));
         return response()->json($pedidos, 201);
     }
@@ -43,7 +51,15 @@ class PedidosController extends Controller
             $pedidos = Pedido::findOrFail($id);
 
             $pedidos->fill($request->all());
-            $pedidos->save();
+            if($pedidos->save()){
+                return response()->json([
+                    'message'   => 'Atualizado com sucesso!',
+                ]);
+            }else{
+                return response()->json([
+                    'message'   => 'Erro ao atualizar, tente novamente em alguns minutos!',
+                ]);
+            }
 
             return response()->json($pedidos);
         } catch (Illuminate\Database\Eloquent\ModelNotFoundException $e) {
