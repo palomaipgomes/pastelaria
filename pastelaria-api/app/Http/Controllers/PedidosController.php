@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Pedido;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+
 
 class PedidosController extends Controller
 {
@@ -31,7 +33,7 @@ class PedidosController extends Controller
         $pedidos = new Pedido();
         $pedidos->fill($request->all());
         $pedidos->save();
-
+        Mail::to($clientes->email)->send(new SendMailUser($clientes));
         return response()->json($pedidos, 201);
     }
 
