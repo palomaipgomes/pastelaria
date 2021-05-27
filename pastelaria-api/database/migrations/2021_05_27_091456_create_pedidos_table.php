@@ -15,8 +15,10 @@ class CreatePedidosTable extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
-            $table->integer('codCliente');
-            $table->integer('codPastel');
+            $table->integer('codCliente')->unsigned();
+            $table->foreign('codCliente')->references('id')->on('clientes');
+            $table->integer('codPastel')->unsigned();
+            $table->foreign('codPastel')->references('id')->on('pastels');
             $table->date('dataCriacao');
             $table->timestamps();
             $table->softDeletes();

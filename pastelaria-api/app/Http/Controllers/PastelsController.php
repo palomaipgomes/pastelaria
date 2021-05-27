@@ -49,7 +49,7 @@ class PastelsController extends Controller
                 'message'   => 'Erro ao cadastrar, tente novamente em alguns minutos!',
             ]);
         }
-    }
+
 
         return response()->json($pasteis, 201);
     }
