@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\PastelsController;
+use App\Http\Controllers\PedidosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(array('prefix' => 'api'), function()
+{
+
+  Route::get('/', function () {
+      return response()->json(['message' => 'Pedidos API', 'status' => 'Connected']);;
+  });
+
+  Route::resource('clientes', ClientesController::class);
+  Route::resource('pasteis', PastelsController::class);
+  Route::resource('pedidos', PedidosController::class);
+});
+
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('api');
 });
