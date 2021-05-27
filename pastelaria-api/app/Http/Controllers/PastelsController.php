@@ -29,8 +29,27 @@ class PastelsController extends Controller
     public function store(Request $request)
     {
         $pasteis = new Pastel();
-        $pasteis->fill($request->all());
-        $pasteis->save();
+        $pasteis->nome = $request->nome;
+        $pasteis->preco = $request->preco;
+
+        if($request->hasFile('foto')){
+            $name = Str::random(15). '.' . $request->foto->extension();
+
+            $path = $request->foto->storeAs('image_uploads', $name, 'public');
+
+            $pasteis->foto = asset('img/pasteis').$path;
+        }
+
+        if($pasteis->save()){
+            return response()->json([
+                'message'   => 'Cadastro com sucesso!',
+            ]);
+        }else{
+            return response()->json([
+                'message'   => 'Erro ao cadastrar, tente novamente em alguns minutos!',
+            ]);
+        }
+    }
 
         return response()->json($pasteis, 201);
     }
@@ -45,8 +64,26 @@ class PastelsController extends Controller
             ], 404);
         }
 
-        $pasteis->fill($request->all());
-        $pasteis->save();
+        $pasteis->nome = $request->nome;
+        $pasteis->preco = $request->preco;
+
+        if($request->hasFile('foto')){
+            $name = Str::random(15). '.' . $request->foto->extension();
+
+            $path = $request->foto->storeAs('image_uploads', $name, 'public');
+
+            $pasteis->foto = asset('img/pasteis').$path;
+        }
+
+        if($pasteis->save()){
+            return response()->json([
+                'message'   => 'Atualizado com sucesso!',
+            ]);
+        }else{
+            return response()->json([
+                'message'   => 'Erro ao atualizar, tente novamente em alguns minutos!',
+            ]);
+        }
 
         return response()->json($pasteis);
     }
